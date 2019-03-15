@@ -1,19 +1,28 @@
 {
   "name": "timelin-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "TimeLin, registra momentos marcantes da sua vida",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Izaquielnn/timelin-api.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Izaquiel Nascimento",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Izaquielnn/timelin-api/issues"
   },
-  "homepage": "https://github.com/Izaquielnn/timelin-api#readme"
+  "homepage": "https://github.com/Izaquielnn/timelin-api#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.2",
+    "pg": "^7.8.2",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^5.1.0"
+  }
 }
