@@ -1,6 +1,7 @@
 const db = require('../config/database');
 const Sequelize = require('sequelize');
 const User = require('./user');
+const Tag = require('./tag');
 
 const Event = db.define('Event', {
     name: {
@@ -20,6 +21,17 @@ const Event = db.define('Event', {
         defaultValue: '#fff'
     },
 });
+
+Event.belongsToMany(Tag, {
+    through: 'EventTag',
+    as: 'tags',
+    foreignKey: 'EventId'
+});
+Tag.belongsToMany(Event, {
+    through: 'EventTag',
+    as: 'events',
+    foreignKey: 'TagId'
+})
 
 User.hasMany(Event);
 
