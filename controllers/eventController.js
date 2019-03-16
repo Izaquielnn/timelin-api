@@ -12,11 +12,11 @@ module.exports = {
         });
 
         event = await Event.create({name, description, date, color, UserId: user.id});
-        await event.setTags(tags.map(tag => tag.id)).catch(err => {
+        if (tags) await event.setTags(tags.map(tag => tag.id)).catch(err => {
             return res.status(400).send('Conjunto de tags inválido.');
         });
         const eventTags = await event.getTags();
-        var eventCreated = {
+        const eventCreated = {
             id: event.id,
             name: event.name,
             description: event.description,
@@ -64,10 +64,25 @@ module.exports = {
         });
 
         await eventToUpdate.update({name, description, date, color});
+        
         if(tags) await eventToUpdate.setTags(tags.map(tag => tag.id)).catch(() => {
             return res.status(400).send('Conjunto de tags inválido.');
         });
-        res.send(eventToUpdate);
+
+        let eventTags = await eventToUpdate.getTags();
+        
+        const eventUpdated = {
+            id: eventToUpdate.id,
+            name: eventToUpdate.name,
+            description: eventToUpdate.description,
+            date: eventToUpdate.date,
+            color: eventToUpdate.color,
+            tags: eventTags.map(tag => ({
+                id: tag.id, 
+                name: tag.name, 
+                color: tag.color}))
+        }
+        res.send(eventUpdated);
     },
     async delete(req, res) {
         const eventDeleted = await Event.destroy({
