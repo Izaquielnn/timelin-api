@@ -68,5 +68,14 @@ module.exports = {
             return res.status(400).send('Conjunto de tags inválido.');
         });
         res.send(eventToUpdate);
+    },
+    async delete(req, res) {
+        const eventDeleted = await Event.destroy({
+            where: {id: req.params.id}
+        }).catch(() => {
+            return res.status(400).send();
+        });
+        if(eventDeleted === 0) res.send('Evento não encontrado.');
+        else res.send('Evento deletado.');
     }
 }

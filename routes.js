@@ -17,6 +17,7 @@ routes.put('/users/me', auth, userController.update);
 routes.post('/events', auth, eventController.store);
 routes.get('/events', auth, eventController.index);
 routes.put('/events/:id', auth, eventController.update);
+routes.delete('/events/:id', auth, eventController.delete);
 
 routes.post('/tags', auth, tagController.store);
 routes.get('/tags', auth, tagController.index);
