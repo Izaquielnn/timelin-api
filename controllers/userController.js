@@ -3,7 +3,7 @@ const User = require('../models/user');
 module.exports = {
     async store(req, res) {
         const {name, email, password} = req.body;
-        let user = User.build({name, email, password});
+        let user = await User.build({name, email, password});
         user.validate().catch( (err) => {
             return res.status(400).send(err.errors[0].message);
         });
