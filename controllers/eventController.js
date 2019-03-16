@@ -22,5 +22,25 @@ module.exports = {
             }
         })
         res.send(events);
+    },
+
+    async update(req, res) {
+        const eventToUpdate = await Event.findByPk(req.params.id);
+        if(!eventToUpdate) return res.status(400).send('Evento não encontrado');
+
+        const { name, description, date, color} = req.body;
+
+        const event = await Event.build({
+            name: name || eventToUpdate.name,
+            description: description || eventToUpdate.description,
+            date: date || eventToUpdate.date,
+            color: color || eventToUpdate.color
+        });
+        event.validate().catch( (err) => {
+            return res.status(400).send(err.errors[0].message);
+        });
+
+        eventToUpdate.update({name, description, date, color});
+        res.send(eventToUpdate);
     }
 }
