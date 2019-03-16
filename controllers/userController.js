@@ -30,5 +30,21 @@ module.exports = {
             email: user.email
         } 
         res.send(user);
+    },
+    async update(req, res) {
+        const userToUpdate = await User.findByPk(req.user.id);
+        const { name, password, email } = req.body;
+        
+        const user = await User.build({ 
+            name: name || userToUpdate.name,
+            password: password || userToUpdate.password,
+            email: email || userToUpdate.email
+        })
+        await user.validate().catch( (err) => {
+            return res.status(400).send(err.errors[0].message);
+        });
+
+        await userToUpdate.update({name, password, email})
+        res.send(userToUpdate);
     }
 }
