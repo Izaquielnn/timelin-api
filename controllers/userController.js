@@ -35,7 +35,7 @@ module.exports = {
         const userToUpdate = await User.findByPk(req.user.id);
         const { name, password, email } = req.body;
         
-        const user = await User.build({ 
+        let user = await User.build({ 
             name: name || userToUpdate.name,
             password: password || userToUpdate.password,
             email: email || userToUpdate.email
@@ -45,6 +45,11 @@ module.exports = {
         });
 
         await userToUpdate.update({name, password, email})
-        res.send(userToUpdate);
+        user = {
+            id: userToUpdate.id,
+            name: userToUpdate.name,
+            email: userToUpdate.email
+        } 
+        res.send(user);
     }
 }
