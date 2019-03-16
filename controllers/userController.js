@@ -17,8 +17,18 @@ module.exports = {
             name: newUser.name,
             email: newUser.email,
         }
-        
+
         const token = newUser.generateToken;
         res.header('x-auth-token', token).send(user);
+    },
+
+    async getCurrentUser(req , res) {
+        let user = await User.findByPk(req.user.id);
+        user = {
+            id: user.id,
+            name: user.name,
+            email: user.email
+        } 
+        res.send(user);
     }
 }
