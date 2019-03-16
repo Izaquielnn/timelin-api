@@ -1,5 +1,6 @@
 const db = require('../config/database');
 const Sequelize = require('sequelize');
+const jwt = require('jsonwebtoken');
 
 const User = db.define('User', {
     name: {
@@ -32,6 +33,14 @@ const User = db.define('User', {
             }
         }
     },
+
+    generateToken: {
+        type: new Sequelize.VIRTUAL(Sequelize.BOOLEAN, ['id']),
+        get: function () {
+            const token = jwt.sign({ id: this.get('id') }, 'jwtPrivateKey');
+            return token;
+        }
+    }
 });
 
 module.exports = User;

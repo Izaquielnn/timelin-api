@@ -12,12 +12,13 @@ module.exports = {
         if(user) return res.status(400).send('Usuário já cadastrado.');
         
         const newUser = await User.create({name, email, password});
-        
         user = {
             id: newUser.id,
             name: newUser.name,
             email: newUser.email,
         }
-        res.send(user);
+        
+        const token = newUser.generateToken;
+        res.header('x-auth-token', token).send(user);
     }
 }
