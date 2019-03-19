@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 app.use(routes);
 
-db.sync({ force: true }).then(() => {
+db.sync().then(() => {
 
     console.log("database connected...");
     app.listen(PORT, console.log(`Server started on port ${PORT}`));
